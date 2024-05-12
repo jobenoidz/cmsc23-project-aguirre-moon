@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -68,6 +70,10 @@ class SignInSignUpPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Implement sign-in logic here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DonorView()),
+                );
               },
               child: Text('Sign In'),
             ),
@@ -100,6 +106,14 @@ class SignInSignUpPage extends StatelessWidget {
     );
   }
 }
+
+// Sign up (Name, Username, Password, Address/es, Contact No.)
+//  ○ Can sign up as an organization that accepts donations
+//    ■ Must enter the following information:
+//  ● Name of organization
+//  ● Proof/s of legitimacy
+//    ■ Subject to approval
+//  ○ Signed up as donors by default
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -147,6 +161,10 @@ class SignUpPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Implement sign-up logic here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DonorView()),
+                );
               },
               child: Text('Sign Up'),
             ),
@@ -154,7 +172,7 @@ class SignUpPage extends StatelessWidget {
           GestureDetector(
               onTap: () {
                 // Navigate to sign-up page
-                Navigator.push(
+                Navigator.pop(
                   context,
                   MaterialPageRoute(builder: (context) => SignInSignUpPage()),
                 );
@@ -178,3 +196,133 @@ class SignUpPage extends StatelessWidget {
     );
   }
 }
+
+
+class DonorView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Homepage - List of Organizations'),
+      ),
+      body: ListView.builder(
+        itemCount: organizations.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text(organizations[index]),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DonationForm(organization: organizations[index]),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DonationForm extends StatefulWidget {
+  final String organization;
+
+  DonationForm({required this.organization});
+
+  @override
+  _DonationFormState createState() => _DonationFormState();
+}
+
+class _DonationFormState extends State<DonationForm> {
+  File? _image;
+  // final picker = ImagePicker();
+
+  // Future getImage() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _image = File(pickedFile.path);
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Donate to ${widget.organization}'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Donation Item Category:'),
+            CheckboxListTile(
+              title: Text('Food'),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: Text('Clothes'),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: Text('Cash'),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: Text('Necessities'),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            CheckboxListTile(
+              title: Text('Others'),
+              value: false,
+              onChanged: (bool? value) {},
+            ),
+            ElevatedButton(
+              onPressed: (){}, //getImage,
+              child: Text('Take Photo of Items (Optional)'),
+            ),
+            _image != null ? Image.file(_image!) : SizedBox(),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Weight of Items (kg/lbs)',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Date and Time for Pickup/Drop-off',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Address for Pickup/Drop-off',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Contact No for Pickup',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Generate QR Code and handle donation submission
+              },
+              child: Text('Submit Donation'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+List<String> organizations = ['Organization 1', 'Organization 2', 'Organization 3'];
