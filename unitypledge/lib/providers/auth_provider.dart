@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:unitypledge/api/firebase_auth_api.dart';
+import 'package:unitypledge/models/donor_model.dart';
+import 'package:unitypledge/models/pending_org_model.dart';
 
 class UserAuthProvider with ChangeNotifier {
   late Stream<User?> _userStream;
@@ -22,9 +24,14 @@ class UserAuthProvider with ChangeNotifier {
     await authService.signUp(email, password);
   }
 
-  Future<void> saveUser(String email, /*Deets deets*/) async {
+  Future<void> saveDonor(String email, Donor donor) async {
     print("Saving user ---------------");
-    // await authService.saveUser(email, deets.toJson(deets));
+    await authService.saveDonor(email, donor.toJson(donor));
+  }
+
+  Future<void> savePendingOrg(String email, PendingOrg org) async {
+    print("Saving user ---------------");
+    await authService.savePendingOrg(email, org.toJson(org));
   }
 
   Future<void> signIn(String email, String password) async {

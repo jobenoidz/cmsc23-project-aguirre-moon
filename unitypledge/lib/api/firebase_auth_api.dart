@@ -13,12 +13,16 @@ class FirebaseAuthApi {
     return auth.authStateChanges();
   }
 
-  Stream<QuerySnapshot> fetchDeets(){
+  Stream<QuerySnapshot> fetchDeets() {
     return db.collection("users").snapshots();
   }
 
   User? getUser() {
     return auth.currentUser;
+  }
+
+  String? getEmail() {
+    return auth.currentUser?.email;
   }
 
   Future<void> signUp(String email, String password) async {
@@ -32,10 +36,21 @@ class FirebaseAuthApi {
     }
   }
 
-  Future<void> saveUser(String email, Map<String, dynamic> deets) async {
-    print("API Saving user ---------");
+  Future<void> saveDonor(String email, Map<String, dynamic> donor) async {
+    print("API Saving Donor ---------");
     try {
-      await db.collection("users").doc(email).set(deets);
+      await db.collection("dono-users").doc(email).set(donor);
+    } on FirebaseException catch (e) {
+      print("Firebase Exceptin: ${e.code} : ${e.message}");
+    } catch (e) {
+      print('Error 001: $e');
+    }
+  }
+
+  Future<void> savePendingOrg(String email, Map<String, dynamic> org) async {
+    print("API Saving Org ---------");
+    try {
+      await db.collection("org-approval").doc(email).set(org);
     } on FirebaseException catch (e) {
       print("Firebase Exceptin: ${e.code} : ${e.message}");
     } catch (e) {

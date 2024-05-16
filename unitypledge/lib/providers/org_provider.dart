@@ -8,31 +8,31 @@ class OrgListProvider with ChangeNotifier {
   late Stream<QuerySnapshot> _todosStream;
 
   OrgListProvider() {
-    fetchTodos();
+    fetchOrgs();
   }
   // getter
   Stream<QuerySnapshot> get todo => _todosStream;
 
-  void fetchTodos() {
-    _todosStream = firebaseService.getAllTodos();
+  void fetchOrgs() {
+    _todosStream = firebaseService.getAllOrgs();
     notifyListeners();
   }
 
-  void addTodo(Org org) async {
-    String message = await firebaseService.addTodo(org.toJson(org));
-    print(message);
-    notifyListeners();
-  }
+  // void addOrg(Org org) async {
+  //   String message = await firebaseService.addOrg(org.toJson(org));
+  //   print(message);
+  //   notifyListeners();
+  // }
 
   // void editTodo(String id, String newTitle) async {
   //   await firebaseService.editTodo(id, newTitle);
   //   notifyListeners();
   // }
 
-  void deleteTodo(String id) async {
-    await firebaseService.deleteTodo(id);
-    notifyListeners();
-  }
+  // void deleteTodo(String id) async {
+  //   await firebaseService.deleteTodo(id);
+  //   notifyListeners();
+  // }
 
   // void toggleStatus(String id, bool status) async {
   //   await firebaseService.toggleStatus(id, status);
