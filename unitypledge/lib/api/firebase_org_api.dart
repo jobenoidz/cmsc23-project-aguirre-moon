@@ -5,7 +5,7 @@ class FirebaseOrgAPI {
 
   Future<String> addTodo(Map<String, dynamic> org) async {
     try {
-      await db.collection("orgs").add(org);
+      await db.collection("org-users").add(org);
 
       return "Successfully added!";
     } on FirebaseException catch (e) {
@@ -14,12 +14,12 @@ class FirebaseOrgAPI {
   }
 
   Stream<QuerySnapshot> getAllTodos() {
-    return db.collection("orgs").snapshots();
+    return db.collection("org-users").snapshots();
   }
 
   Future<String> deleteTodo(String id) async {
     try {
-      await db.collection("orgs").doc(id).delete();
+      await db.collection("org-users").doc(id).delete();
 
       return "Successfully deleted!";
     } on FirebaseException catch (e) {

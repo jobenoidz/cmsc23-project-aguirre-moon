@@ -1,30 +1,35 @@
-/*
-  Created by: Claizel Coubeili Cepe
-  Date: updated April 26, 2023
-  Description: Sample todo app with Firebase 
-*/
 import 'dart:convert';
 
 class Org {
-  String id;
+  String name; //may ari ng org
+  String email; //email ni user
+  List<dynamic> address;
+  String contact;
   String orgName;
-  String user;
+  String orgProof;
   bool status;
 
   Org({
-    required this.id,
+    required this.name,
+    required this.email,
+    required this.address,
+    required this.contact,
     required this.orgName,
-    required this.user,
+    required this.orgProof,
     required this.status,
   });
 
   // Factory constructor to instantiate object from json format
   factory Org.fromJson(Map<String, dynamic> json) {
     return Org(
-      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      address: json['address'],
+      contact: json['contact'],
       orgName: json['orgName'],
-      user: json['user'],
+      orgProof: json['orgProof'],
       status: json['status'],
+      // orgProof: json['orgProof'],
     );
   }
 
@@ -35,10 +40,14 @@ class Org {
 
   Map<String, dynamic> toJson(Org org) {
     return {
-      'id' : org.id,
+      'name': org.name,
+      'email': org.email,
+      'address': org.address,
+      'contact': org.contact,
       'orgName': org.orgName,
-      'user': org.user,
+      'orgProof':org.orgProof,
       'status': org.status,
+      // 'orgProof': org.orgProof
     };
   }
 }
