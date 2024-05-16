@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "642242835412",
+    "project_id": "cmsc23-project-aguirre-moon",
+    "storage_bucket": "cmsc23-project-aguirre-moon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642242835412:android:aa886bd4d7d65a8e195c41",
+        "android_client_info": {
+          "package_name": "com.example.unitypledge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ1-ZucVMVMzRavReZkFHyE5gBuqeeVuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

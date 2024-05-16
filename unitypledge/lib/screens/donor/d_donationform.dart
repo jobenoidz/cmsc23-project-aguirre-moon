@@ -1,52 +1,6 @@
-// import 'package:flutter/material.dart';
-// import 'package:sample/first_route.dart';
-
-// void main() {
-//   runApp(const MaterialApp(
-//     title: 'Navigation Basics',
-//     home: FirstRoute(),
-//   ));
-    
-// }
-
-
 import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
-void main() {
-  runApp(MaterialApp(
-    title: 'Donors\' View',
-    home: HomePage(),
-  ));
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Homepage - List of Organizations'),
-      ),
-      body: ListView.builder(
-        itemCount: organizations.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(organizations[index]),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DonationForm(organization: organizations[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
 
 class DonationForm extends StatefulWidget {
   final String organization;
