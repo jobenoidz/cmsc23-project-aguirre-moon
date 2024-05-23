@@ -1,42 +1,51 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:unitypledge/providers/org_provider.dart';
-import 'package:unitypledge/screens/donor/d_homepage.dart';
-import 'firebase_options.dart';
-import 'package:unitypledge/providers/auth_provider.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: ((context) => OrgListProvider())),
-        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
-      ],
-      child: const MyApp(),
-    ),
-  );
+import 'screens/authentication/sign_in.dart';
+import 'screens/home.dart';
+import 'services/authentication_service.dart'; 
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Unity Pledge',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomePage(),
-      },
+      title: 'Your App Name',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      home: AuthenticationWrapper(), // Decide whether to show sign-in or home screen based on authentication state
+    );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  final AuthenticationService _authService = AuthenticationService();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _authService.authStateChanges, // Listen for authentication state changes
+      builder: (context, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          User? user = snapshot.data;
+          if (user == null) {
+            // If user is not authenticated, show sign-in screen
+            return SignInScreen();
+          } else {
+            // If user is authenticated, navigate to the home screen
+            return HomeScreen();
+          }
+        } else {
+          // Show a loading indicator while waiting for authentication state
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }
