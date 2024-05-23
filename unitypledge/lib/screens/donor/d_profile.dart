@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unitypledge/models/donor_model.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
+import 'package:unitypledge/providers/donor_provider.dart';
 
 class DonorDetailsPage extends StatelessWidget {
-  final Donor donorDetails;
+  final Map<String,dynamic> donorDetails;
 
   const DonorDetailsPage({super.key, required this.donorDetails});
 
   @override
   Widget build(BuildContext context) {
-    Stream<User?> userStream = context.watch<UserAuthProvider>().userStream;
-
     return Scaffold(
       appBar: AppBar(title: Text("")),
       body: Center(
@@ -21,7 +20,7 @@ class DonorDetailsPage extends StatelessWidget {
           children: [
             Container(
               margin: const EdgeInsets.all(18),
-              child: summaryBuilder(donorDetails),
+              child: summaryBuilder(context),
             ),
           ],
         ),
@@ -29,7 +28,7 @@ class DonorDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget summaryBuilder(Donor donorData) {
+  Widget summaryBuilder(context) {
     //function for adding each item to summary
 
     return Column(
@@ -39,7 +38,7 @@ class DonorDetailsPage extends StatelessWidget {
           style: TextStyle(fontSize: 27),
         ),
         Column(
-          children: donorData.toJson(donorData).entries.map((entry) {
+          children: donorDetails.entries.map((entry) {
             //maps each item from the formData map
             return Padding(
               padding: const EdgeInsets.only(top: 4),

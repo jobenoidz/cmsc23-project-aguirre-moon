@@ -236,3 +236,7 @@ class _SignUpState extends State<SignUpPage> {
       },
       child: const Text("Sign Up"));
 }
+
+//if (email in auth){
+//    return email already exists
+//}
