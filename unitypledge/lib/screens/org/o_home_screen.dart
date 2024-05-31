@@ -11,9 +11,7 @@ import 'package:unitypledge/screens/org/o_donationdetails.dart';
 import 'package:unitypledge/screens/widgets/drawer.dart';
 
 class OrgPage extends StatefulWidget {
-  final Map<String, dynamic> orgDetails;
-
-  const OrgPage({super.key, required this.orgDetails});
+  const OrgPage({super.key});
 
   @override
   State<OrgPage> createState() => _OrgPageState();
@@ -22,13 +20,13 @@ class OrgPage extends StatefulWidget {
 class _OrgPageState extends State<OrgPage> {
   @override
   Widget build(BuildContext context) {
-    String orgEmail = context.watch<UserAuthProvider>().getEmail()!;
+    String orgEmail = context.read<UserAuthProvider>().getEmail()!;
     Stream<QuerySnapshot> orgDonationStream =
-        context.watch<DonationProvider>().getOrgDonors(orgEmail);
+        context.read<DonationProvider>().getOrgDonors(orgEmail);
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(
-        title: const Text("ORGS"),
+        title: const Text("DONATIONS RECEIVED -"),
       ),
       body: StreamBuilder(
         stream: orgDonationStream,

@@ -116,15 +116,6 @@ class _SignInPageState extends State<SignInPage> {
               .authService
               .signIn(email!, password!);
 
-          /*
-            if in admin db
-                admin
-            else in org db
-                org view
-            else dono view
-            
-           */
-
           print(message);
           print(showSignInErrorMessage);
 

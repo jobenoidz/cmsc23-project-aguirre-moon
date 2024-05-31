@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/providers/donor_provider.dart';
 import 'package:unitypledge/screens/donor/d_profile.dart';
+import 'package:unitypledge/screens/signin.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({super.key});
@@ -45,9 +46,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             title: const Text('Logout'),
-            onTap: () {
-              context.read<UserAuthProvider>().signOut();
-              Navigator.pop(context);
+            onTap: () async {
+              await context.read<UserAuthProvider>().signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInPage()),
+                );
             },
           ),
         ],

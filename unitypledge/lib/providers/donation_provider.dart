@@ -23,8 +23,8 @@ class DonationProvider with ChangeNotifier {
     return donationService.getDonorDonations(donorEmail);
   }
 
-  Stream<QuerySnapshot> getOrgDonors(String donorEmail) {
-    return donationService.getDonorDonations(donorEmail);
+  Stream<QuerySnapshot> getOrgDonors(String orgEmail) {
+    return donationService.getOrgDonors(orgEmail);
   }
 
   Future<void> addDonation(Donation donation) async {

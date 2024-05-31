@@ -16,10 +16,9 @@ class OrgPendingPage extends StatelessWidget {
           const Text("Your organization is pending approval.", textAlign: TextAlign.center),
           const Text("Please check again later.", textAlign: TextAlign.center),
           ElevatedButton(
-              onPressed: () {
-                context.read<UserAuthProvider>().signOut();
-                Navigator.pop(context);
-                Navigator.push(
+              onPressed: () async {
+                await context.read<UserAuthProvider>().signOut();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => SignInPage()),
                 );

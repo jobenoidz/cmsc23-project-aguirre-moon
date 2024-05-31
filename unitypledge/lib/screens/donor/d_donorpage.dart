@@ -35,7 +35,7 @@ class _DonorPageState extends State<DonorPage> {
             );
           } else if (!snapshot.hasData) {
             return const Center(
-              child: Text("No Todos Found"),
+              child: Text("No orgs Found"),
             );
           }
 

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/screens/admin/a_homepage.dart';
 import 'package:unitypledge/screens/donor/d_donorpage.dart';
+import 'package:unitypledge/screens/org/o_home_screen.dart';
 import 'package:unitypledge/screens/org/o_pending.dart';
 import 'package:unitypledge/screens/signin.dart';
 
@@ -68,12 +69,13 @@ class _HomePageState extends State<HomePage> {
                   case "isAdmin":
                     return AdminPage();
                   case "isOrg":
-                    return const OrgPendingPage();
+                    return const OrgPage();
                   case "isPending":
                     return const OrgPendingPage();
                   case "isDonor":
-                  default:
                     return const DonorPage();
+                  default:
+                    return HomePage();
                 }
               },
             );

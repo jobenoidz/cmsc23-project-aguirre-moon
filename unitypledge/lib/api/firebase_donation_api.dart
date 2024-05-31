@@ -24,9 +24,9 @@ class FirebaseDonationAPI {
         .snapshots();
   }
 
-  Stream<QuerySnapshot> getOrgDonors(String donorEmail) {
+  Stream<QuerySnapshot> getOrgDonors(String orgEmail) {
     return db.collection("donations")
-        .where('donorEmail', isEqualTo: donorEmail)
+        .where('orgEmail', isEqualTo: orgEmail)
         .snapshots();
   }
 
