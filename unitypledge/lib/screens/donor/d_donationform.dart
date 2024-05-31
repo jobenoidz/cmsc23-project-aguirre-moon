@@ -183,20 +183,6 @@ class _DonationFormState extends State<DonationForm> {
 
   Widget get dateTimeField => Padding(
     padding: const EdgeInsets.only(bottom: 30),
-    // child: TextFormField(
-    //   decoration: const InputDecoration(
-    //       border: OutlineInputBorder(),
-    //       label: Text("Date and Time for Pick Up / Drop Off"),
-    //       hintText: "Enter date and time"),
-    //   onSaved: (value) => setState(() => datetime = value),
-    //   validator: (value) {
-    //     if (value == null || value.isEmpty) {
-    //       return "Please enter date and time";
-    //     }
-    //     return null;
-    //   },
-    // ),
-
     child: TextFormField(
       controller: dateTimeController,
       onTap: () async {

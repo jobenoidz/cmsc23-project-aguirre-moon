@@ -45,14 +45,15 @@ class AdminPage extends StatelessWidget {
               child: Text('Manage Donors'),
             ),
             ElevatedButton(
-            onPressed: () {
-              context.read<UserAuthProvider>().signOut();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInPage()),
-                );
-            },
-            child:Text("Logout")),
+                onPressed: () {
+                  context.read<UserAuthProvider>().signOut();
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInPage()),
+                  );
+                },
+                child: Text("Logout")),
           ],
         ),
       ),

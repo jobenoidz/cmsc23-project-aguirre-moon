@@ -12,11 +12,11 @@ class DonationList extends StatefulWidget {
   State<DonationList> createState() => _DonationListState();
 }
 
-
 class _DonationListState extends State<DonationList> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> donationStream = context.watch<DonationProvider>().donations;
+    Stream<QuerySnapshot> donationStream =
+        context.watch<DonationProvider>().donations;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Donation List"),
@@ -34,15 +34,16 @@ class _DonationListState extends State<DonationList> {
             );
           } else if (!snapshot.hasData) {
             return const Center(
-              child: Text("No Todos Found"),
+              child: Text("No Donations Found"),
             );
           }
 
           return ListView.builder(
             itemCount: snapshot.data?.docs.length,
             itemBuilder: ((context, index) {
+              DocumentSnapshot document = snapshot.data!.docs[index];
               Donation donation = Donation.fromJson(
-                  snapshot.data?.docs[index].data() as Map<String, dynamic>);
+                  document.data() as Map<String, dynamic>);
               return Container(
                   decoration: BoxDecoration(
                       border: Border.all(),
@@ -54,21 +55,19 @@ class _DonationListState extends State<DonationList> {
                     children: [
                       Expanded(
                           child: Text(
-                            "Donation ID",
+                        "Donation ID: ${document.id}",
                         //donor.id,
                         textAlign: TextAlign.left,
                       )),
                       ElevatedButton(
                           //view donor
                           onPressed: () async {
-
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      DonationDetailsPage(donationDetails: donation.toJson(donation))
-                                )
-                                );
+                                    builder: (context) => DonationDetailsPage(
+                                        donationDetails:
+                                            donation.toJson(donation))));
                           },
                           child: const Icon(Icons.remove_red_eye))
                     ],

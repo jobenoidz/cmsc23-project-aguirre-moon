@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/donation_provider.dart';
 import 'package:unitypledge/providers/donor_provider.dart';
 import 'package:unitypledge/providers/org_provider.dart';
-import 'package:unitypledge/screens/donor/d_homepage.dart';
+import 'package:unitypledge/screens/homepage.dart';
 import 'firebase_options.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 
