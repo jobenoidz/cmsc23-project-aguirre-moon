@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unitypledge/providers/donation_provider.dart';
 import 'package:unitypledge/providers/donor_provider.dart';
 import 'package:unitypledge/providers/org_provider.dart';
-import 'package:unitypledge/screens/donor/d_homepage.dart';
+import 'package:unitypledge/screens/homepage.dart';
 import 'firebase_options.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 
@@ -18,7 +19,8 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: ((context) => DonorListProvider())),
         ChangeNotifierProvider(create: ((context) => OrgListProvider())),
-        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
+        ChangeNotifierProvider(create: ((context) => DonationProvider()))
       ],
       child: const MyApp(),
     ),

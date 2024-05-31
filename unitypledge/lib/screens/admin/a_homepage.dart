@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/screens/signin.dart';
 import 'a_orglist.dart';
-import 'a_donations.dart';
+import 'a_donationlist.dart';
 import 'a_donorlist.dart';
 
 class AdminPage extends StatelessWidget {
@@ -30,7 +30,7 @@ class AdminPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DonationListScreen()),
+                  MaterialPageRoute(builder: (context) => DonationList()),
                 );
               },
               child: Text('Manage Donations'),
@@ -45,14 +45,14 @@ class AdminPage extends StatelessWidget {
               child: Text('Manage Donors'),
             ),
             ElevatedButton(
-            onPressed: () {
-              context.read<UserAuthProvider>().signOut();
-              Navigator.push(
+                onPressed: () async {
+                  await context.read<UserAuthProvider>().signOut();
+                  Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => SignInPage()),
                 );
-            },
-            child:Text("Logout")),
+                },
+                child: Text("Logout")),
           ],
         ),
       ),

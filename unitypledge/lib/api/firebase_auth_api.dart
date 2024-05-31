@@ -63,7 +63,7 @@ class FirebaseAuthApi {
           await db.collection("dono-users").doc(email).get();
 
       if (isDonor.exists) {
-        return "isOrg";
+        return "isDonor";
       }
 
       return "";

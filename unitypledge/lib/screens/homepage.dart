@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/screens/admin/a_homepage.dart';
 import 'package:unitypledge/screens/donor/d_donorpage.dart';
+import 'package:unitypledge/screens/org/o_home_screen.dart';
+import 'package:unitypledge/screens/org/o_pending.dart';
 import 'package:unitypledge/screens/signin.dart';
 
 class HomePage extends StatefulWidget {
@@ -66,13 +68,14 @@ class _HomePageState extends State<HomePage> {
                 switch (accType) {
                   case "isAdmin":
                     return AdminPage();
-                  // case "isOrg":
-                  //   return const OrgPage();
-                  // case "isPending":
-                  //   return const OrgApprovalPage();
+                  case "isOrg":
+                    return const OrgPage();
+                  case "isPending":
+                    return const OrgPendingPage();
                   case "isDonor":
-                  default:
                     return const DonorPage();
+                  default:
+                    return HomePage();
                 }
               },
             );

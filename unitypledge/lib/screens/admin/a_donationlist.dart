@@ -2,34 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unitypledge/models/donation_model.dart';
-import 'package:unitypledge/models/org_model.dart';
-import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/providers/donation_provider.dart';
-import 'package:unitypledge/providers/org_provider.dart';
-import 'package:unitypledge/screens/donor/d_donationform.dart';
 import 'package:unitypledge/screens/org/o_donationdetails.dart';
-import 'package:unitypledge/screens/widgets/drawer.dart';
 
-class OrgPage extends StatefulWidget {
-  const OrgPage({super.key});
+class DonationList extends StatefulWidget {
+  const DonationList({super.key});
 
   @override
-  State<OrgPage> createState() => _OrgPageState();
+  State<DonationList> createState() => _DonationListState();
 }
 
-class _OrgPageState extends State<OrgPage> {
+class _DonationListState extends State<DonationList> {
   @override
   Widget build(BuildContext context) {
-    String orgEmail = context.read<UserAuthProvider>().getEmail()!;
-    Stream<QuerySnapshot> orgDonationStream =
-        context.read<DonationProvider>().getOrgDonors(orgEmail);
+    Stream<QuerySnapshot> donationStream =
+        context.watch<DonationProvider>().donations;
     return Scaffold(
-      drawer: DrawerWidget(),
       appBar: AppBar(
-        title: const Text("DONATIONS RECEIVED -"),
+        title: const Text("Donation List"),
       ),
       body: StreamBuilder(
-        stream: orgDonationStream,
+        stream: donationStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -62,19 +55,19 @@ class _OrgPageState extends State<OrgPage> {
                     children: [
                       Expanded(
                           child: Text(
-                        document.id,
+                        "Donation ID: ${document.id}",
+                        //donor.id,
                         textAlign: TextAlign.left,
                       )),
                       ElevatedButton(
-                          //donate to org
-                          onPressed: () {
+                          //view donor
+                          onPressed: () async {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      DonationDetailsPage(
-                                        donationDetails: donation.toJson(donation)),
-                                ));
+                                    builder: (context) => DonationDetailsPage(
+                                        donationDetails:
+                                            donation.toJson(donation))));
                           },
                           child: const Icon(Icons.remove_red_eye))
                     ],
@@ -85,6 +78,4 @@ class _OrgPageState extends State<OrgPage> {
       ),
     );
   }
-
-  
 }
