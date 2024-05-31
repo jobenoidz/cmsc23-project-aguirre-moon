@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unitypledge/providers/auth_provider.dart';
+import 'package:unitypledge/screens/signin.dart';
 import 'a_orglist.dart';
 import 'a_donations.dart';
 import 'a_donorlist.dart';
@@ -18,7 +21,7 @@ class AdminPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OrganizationListScreen()),
+                  MaterialPageRoute(builder: (context) => OrganizationList()),
                 );
               },
               child: Text('Manage Organizations'),
@@ -41,6 +44,15 @@ class AdminPage extends StatelessWidget {
               },
               child: Text('Manage Donors'),
             ),
+            ElevatedButton(
+            onPressed: () {
+              context.read<UserAuthProvider>().signOut();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInPage()),
+                );
+            },
+            child:Text("Logout")),
           ],
         ),
       ),
