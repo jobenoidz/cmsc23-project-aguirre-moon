@@ -10,19 +10,20 @@ class Donation {
   String date;
   List<dynamic>? addresses;
   String? contact;
+  int? status;
 
   Donation(
-      {
-      required this.donorEmail,
+      {required this.donorEmail,
       required this.orgEmail,
       required this.categories,
       required this.isPickUp,
       required this.weight,
       required this.date,
       this.addresses,
-      this.contact}
-      
-      );
+      this.contact,
+      this.status = 0,
+      }
+    );
 
   // Factory constructor to instantiate object from json format
   factory Donation.fromJson(Map<String, dynamic> json) {
@@ -34,8 +35,9 @@ class Donation {
         weight: json['weight'],
         date: json['date'],
         addresses: json['addresses'],
-        contact: json['contact']
-      );
+        contact: json['contact'],
+        status: json['status'],
+        );
   }
 
   static List<Donation> fromJsonArray(String jsonData) {
@@ -52,7 +54,8 @@ class Donation {
       'weight': donation.weight,
       'date': donation.date,
       'addresses': donation.addresses,
-      'contact': donation.contact
+      'contact': donation.contact,
+      'status': donation.status,
     };
   }
 }
