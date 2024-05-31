@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
             return const SignInPage();
           }
 
-          // if user is logged in, display the scaffold containing the streambuilder for the todos
+          // if user is logged in
           User? user = snapshot.data;
           if (user != null) {
             return FutureBuilder<String>(
