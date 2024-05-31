@@ -36,6 +36,9 @@ class _DonationFormState extends State<DonationForm> {
   // }
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  final TextEditingController dateTimeController = TextEditingController();
+
+
   bool isFood = false;
   bool isClothes = false;
   bool isCash = false;
@@ -180,19 +183,46 @@ class _DonationFormState extends State<DonationForm> {
 
   Widget get dateTimeField => Padding(
     padding: const EdgeInsets.only(bottom: 30),
+    // child: TextFormField(
+    //   decoration: const InputDecoration(
+    //       border: OutlineInputBorder(),
+    //       label: Text("Date and Time for Pick Up / Drop Off"),
+    //       hintText: "Enter date and time"),
+    //   onSaved: (value) => setState(() => datetime = value),
+    //   validator: (value) {
+    //     if (value == null || value.isEmpty) {
+    //       return "Please enter date and time";
+    //     }
+    //     return null;
+    //   },
+    // ),
+
     child: TextFormField(
+      controller: dateTimeController,
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2101),
+        );
+        if (pickedDate != null) {
+          TimeOfDay? pickedTime = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
+          if (pickedTime != null) {
+            setState(() {
+              dateTimeController.text = '${pickedDate.year}/${pickedDate.month}/${pickedDate.day} ${pickedTime.hour}:${pickedTime.minute}';
+            });
+          }
+        }
+      },
       decoration: const InputDecoration(
           border: OutlineInputBorder(),
           label: Text("Date and Time for Pick Up / Drop Off"),
           hintText: "Enter date and time"),
-      onSaved: (value) => setState(() => datetime = value),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "Please enter date and time";
-        }
-        return null;
-      },
-    ),
+    )
   );
 
   Widget get pickUpField => Column(
@@ -269,7 +299,7 @@ class _DonationFormState extends State<DonationForm> {
             categories: categoryListBuilder(),
             isPickUp: isPickup,
             weight: weight!,
-            date: datetime!,
+            date: dateTimeController.text,
           );
           context.read<DonationProvider>().addDonation(temp);
 
