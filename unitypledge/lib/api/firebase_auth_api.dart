@@ -36,12 +36,60 @@ class FirebaseAuthApi {
     }
   }
 
+  Future<String> checkAccount(String email) async {
+    try {
+      DocumentSnapshot isAdmin =
+          await db.collection("admin-users").doc(email).get();
+
+      if (isAdmin.exists) {
+        return "isAdmin";
+      }
+
+      DocumentSnapshot isPending =
+          await db.collection("org-approval").doc(email).get();
+
+      if (isPending.exists) {
+        return "isPending";
+      }
+
+      DocumentSnapshot isOrg =
+          await db.collection("org-users").doc(email).get();
+
+      if (isOrg.exists) {
+        return "isOrg";
+      }
+
+      DocumentSnapshot isDonor =
+          await db.collection("dono-users").doc(email).get();
+
+      if (isDonor.exists) {
+        return "isOrg";
+      }
+
+      return "";
+    } on FirebaseException catch (e) {
+      print("Firebase Exception: ${e.code} : ${e.message}");
+      return "";
+    } catch (e) {
+      print('Error 001: $e');
+      return "";
+    }
+  }
+
   Future<void> saveDonor(String email, Map<String, dynamic> donor) async {
     print("API Saving Donor ---------");
     try {
-      await db.collection("dono-users").doc(email).set(donor);
+      DocumentSnapshot docSnapshot =
+          await db.collection("dono-users").doc(email).get();
+
+      if (!docSnapshot.exists) {
+        print("User added to dono-users");
+        await db.collection("dono-users").doc(email).set(donor);
+      } else {
+        print("User already exists.");
+      }
     } on FirebaseException catch (e) {
-      print("Firebase Exceptin: ${e.code} : ${e.message}");
+      print("Firebase Exception: ${e.code} : ${e.message}");
     } catch (e) {
       print('Error 001: $e');
     }

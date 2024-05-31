@@ -3,7 +3,7 @@ import 'a_orglist.dart';
 import 'a_donations.dart';
 import 'a_donorlist.dart';
 
-class AdminHomeScreen extends StatelessWidget {
+class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -36,9 +36,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               String? donoEmail = context.watch<UserAuthProvider>().getEmail();
-              Map <String,dynamic> donorDetails =
-                  context.watch<DonorListProvider>().getCurrentDono(donoEmail!);
-              return DonorDetailsPage(donorDetails: donorDetails);
+              Future donorDetails = context.watch<DonorListProvider>().getCurrentDono(donoEmail!);
+              return DonorDetailsPage(donorDetails: donorDetails as Map<String,dynamic>);
             }));
           },
         ),

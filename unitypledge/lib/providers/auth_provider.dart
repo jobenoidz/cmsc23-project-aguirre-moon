@@ -20,6 +20,10 @@ class UserAuthProvider with ChangeNotifier {
   User? get user => authService.getUser();
   Stream<QuerySnapshot> get userDeets => _userDeets;
 
+  Future<String> checkAccount(String email) async {
+    return await authService.checkAccount(email);
+  }
+
   Future<void> signUp(String email, String password) async {
     await authService.signUp(email, password);
   }

@@ -168,7 +168,7 @@ class _SignUpState extends State<SignUpPage> {
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        label: Text("COrganization Name"),
+                        label: Text("Organization Name"),
                         hintText: "Enter organization name"),
                     onSaved: (value) => setState(() => orgName = value),
                     validator: (value) {
