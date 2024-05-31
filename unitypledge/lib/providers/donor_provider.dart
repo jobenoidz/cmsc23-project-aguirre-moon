@@ -7,7 +7,7 @@ class DonorListProvider with ChangeNotifier {
   FirebaseDonorAPI firebaseService = FirebaseDonorAPI();
   late Stream<QuerySnapshot> _donorsStream;
 
-  OrgListProvider() {
+  DonorListProvider() {
     fetchDonors();
   }
 
