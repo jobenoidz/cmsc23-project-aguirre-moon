@@ -1,9 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dummyproject/donor_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'sign_in.dart';
+import 'sign_up.dart';
+import 'donor_home.dart';
+import 'admin_home.dart';
+import 'organization_home.dart';
+import 'profile.dart';
+import 'donation_drive_list.dart';
 
-import 'screens/authentication/sign_in.dart';
-import 'screens/home.dart';
-import 'services/authentication_service.dart'; 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -11,40 +21,57 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Your App Name',
+      title: 'Donation App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthenticationWrapper(), // Decide whether to show sign-in or home screen based on authentication state
+      home: AuthWrapper(),
+      routes: {
+        '/signin': (context) => SignIn(),
+        '/signup': (context) => SignUp(),
+        '/home': (context) => DonorHome(),
+        '/adminHome': (context) => AdminHome(),
+        '/organizationHome': (context) => OrganizationHome(organizationId: ''), // placeholder for organizationId
+        '/profile': (context) => Profile(),
+        '/donorProfile': (context) => DonorProfile(),
+        '/donationDrives': (context) => DonationDriveList(),
+      },
     );
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
-  final AuthenticationService _authService = AuthenticationService();
-
+class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _authService.authStateChanges, // Listen for authentication state changes
-      builder: (context, AsyncSnapshot<User?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          User? user = snapshot.data;
-          if (user == null) {
-            // If user is not authenticated, show sign-in screen
-            return SignInScreen();
-          } else {
-            // If user is authenticated, navigate to the home screen
-            return HomeScreen();
-          }
-        } else {
-          // Show a loading indicator while waiting for authentication state
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
         }
+        if (snapshot.hasData) {
+          User? user = snapshot.data;
+          if (user != null && user.email!.contains('admin')) {
+            return AdminHome();
+          } else if (user != null && user.email!.contains('org')) {
+            // Retrieve organizationId from user email or a specific database query
+            return FutureBuilder<DocumentSnapshot>(
+              future: FirebaseFirestore.instance.collection('organizations').doc(user.uid).get(),
+              builder: (context, orgSnapshot) {
+                if (orgSnapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+                if (orgSnapshot.hasData && orgSnapshot.data != null) {
+                  return OrganizationHome(organizationId: orgSnapshot.data!.id);
+                }
+                return Text('Organization not found');
+              },
+            );
+          } else {
+            return DonorHome();
+          }
+        }
+        return SignIn();
       },
     );
   }
