@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
+import 'package:unitypledge/providers/donor_provider.dart';
 import 'package:unitypledge/screens/donor/d_profile.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -14,7 +15,7 @@ class DrawerWidget extends StatefulWidget {
 class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
-    Stream<User?> donorDetails = context.watch<UserAuthProvider>().userStream;
+    // Stream<User?> donorDetails = context.watch<UserAuthProvider>().userStream;
 
     return Drawer(
         child: ListView(
@@ -30,16 +31,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           },
           title: (const Text("Orgs")),
         ),
-        // ListTile(
-        //   title: const Text('Profile'),
-        //   onTap: () {
-        //     Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //             builder: (context) =>
-        //                 DonorDetailsPage(donorDetails: donorDetails)));
-        //   },
-        // ),
+        ListTile(
+          title: const Text('Profile'),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              String? donoEmail = context.watch<UserAuthProvider>().getEmail();
+              Future donorDetails = context.watch<DonorListProvider>().getCurrentDono(donoEmail!);
+              return DonorDetailsPage(donorDetails: donorDetails as Map<String,dynamic>);
+            }));
+          },
+        ),
         ListTile(
           title: const Text('Logout'),
           onTap: () {

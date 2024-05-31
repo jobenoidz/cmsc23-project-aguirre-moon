@@ -10,11 +10,16 @@ class DonorListProvider with ChangeNotifier {
   OrgListProvider() {
     fetchDonors();
   }
+
   // getter
-  Stream<QuerySnapshot> get todo => _donorsStream;
+  Stream<QuerySnapshot> get donors => _donorsStream;
 
   void fetchDonors() {
     _donorsStream = firebaseService.getAllDonors();
     notifyListeners();
+  }
+
+  Future getCurrentDono(String email) async {
+    return await firebaseService.currentDonor(email);
   }
 }

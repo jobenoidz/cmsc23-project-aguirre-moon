@@ -168,7 +168,7 @@ class _SignUpState extends State<SignUpPage> {
                   child: TextFormField(
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        label: Text("COrganization Name"),
+                        label: Text("Organization Name"),
                         hintText: "Enter organization name"),
                     onSaved: (value) => setState(() => orgName = value),
                     validator: (value) {
@@ -236,3 +236,7 @@ class _SignUpState extends State<SignUpPage> {
       },
       child: const Text("Sign Up"));
 }
+
+//if (email in auth){
+//    return email already exists
+//}
