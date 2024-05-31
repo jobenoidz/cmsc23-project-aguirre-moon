@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:unitypledge/api/firebase_donor_api.dart';
-import 'package:unitypledge/models/donor_model.dart';
+import 'package:unitypledge/models/donation_model.dart';
 
 class DonorListProvider with ChangeNotifier {
   FirebaseDonorAPI firebaseService = FirebaseDonorAPI();
