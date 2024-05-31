@@ -5,37 +5,29 @@ import 'package:unitypledge/models/org_model.dart';
 
 class OrgListProvider with ChangeNotifier {
   FirebaseOrgAPI firebaseService = FirebaseOrgAPI();
-  late Stream<QuerySnapshot> _todosStream;
+  late Stream<QuerySnapshot> _orgStream;
+  late Stream<QuerySnapshot> _pendingStream;
 
   OrgListProvider() {
     fetchOrgs();
+    fetchPending();
   }
   // getter
-  Stream<QuerySnapshot> get todo => _todosStream;
+  Stream<QuerySnapshot> get orgs => _orgStream;
+  Stream<QuerySnapshot> get pendings => _pendingStream;
 
   void fetchOrgs() {
-    _todosStream = firebaseService.getAllOrgs();
+    _orgStream = firebaseService.getAllOrgs();
     notifyListeners();
   }
 
-  // void addOrg(Org org) async {
-  //   String message = await firebaseService.addOrg(org.toJson(org));
-  //   print(message);
-  //   notifyListeners();
-  // }
+  void fetchPending() {
+    _pendingStream = firebaseService.getPending();
+    notifyListeners();
+  }
 
-  // void editTodo(String id, String newTitle) async {
-  //   await firebaseService.editTodo(id, newTitle);
-  //   notifyListeners();
-  // }
-
-  // void deleteTodo(String id) async {
-  //   await firebaseService.deleteTodo(id);
-  //   notifyListeners();
-  // }
-
-  // void toggleStatus(String id, bool status) async {
-  //   await firebaseService.toggleStatus(id, status);
-  //   notifyListeners();
-  // }
+  Future<void> approveOrg(Org org) async {
+    await firebaseService.approveOrg(org.email, org.toJson(org));
+    notifyListeners();
+  }
 }

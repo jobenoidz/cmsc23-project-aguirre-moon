@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
-import 'package:unitypledge/screens/donor/d_signup.dart';
+import 'package:unitypledge/screens/signup.dart';
 import 'package:unitypledge/screens/widgets/drawer.dart';
 
 class SignInPage extends StatefulWidget {

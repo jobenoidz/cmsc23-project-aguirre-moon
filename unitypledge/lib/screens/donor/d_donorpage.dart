@@ -16,7 +16,7 @@ class DonorPage extends StatefulWidget {
 class _DonorPageState extends State<DonorPage> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> orgStream = context.watch<OrgListProvider>().todo;
+    Stream<QuerySnapshot> orgStream = context.watch<OrgListProvider>().orgs;
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(

@@ -19,7 +19,7 @@ class DonorListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getCurrentDono(String email) async {
+  Future<Map<String, dynamic>> getCurrentDono(String email) async {
     return await firebaseService.currentDonor(email);
   }
 }

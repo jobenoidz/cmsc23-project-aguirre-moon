@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:unitypledge/providers/auth_provider.dart';
 import 'package:unitypledge/screens/admin/a_homepage.dart';
 import 'package:unitypledge/screens/donor/d_donorpage.dart';
-import 'package:unitypledge/screens/donor/d_signin.dart';
+import 'package:unitypledge/screens/signin.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -60,10 +60,9 @@ class _HomePageState extends State<HomePage> {
                   return const SignInPage();
                 }
 
-                // Get the account type from the snapshot data
+                // Get the account
                 String accType = snapshot.data!;
 
-                // Navigate based on the account type
                 switch (accType) {
                   case "isAdmin":
                     return AdminPage();
